@@ -9,7 +9,7 @@ public class SceneConductor : MonoBehaviour
 
 	[SerializeField] private Button m_BtnReset;
 
-	private Vector2 m_TouchBeagn = Vector2.zero;
+	private Vector2 m_TouchBegan = Vector2.zero;
 
 	private void Awake()
 	{
@@ -26,7 +26,7 @@ public class SceneConductor : MonoBehaviour
 					case ENUM_TOUCH.TOUCH_BEGAN:
 						if (m_CtrlPlayer.IsRagdoll)
 						{
-							m_TouchBeagn = InputManager.GetPosition();
+							m_TouchBegan = InputManager.GetPosition();
 						}
 						else
 						{
@@ -34,13 +34,13 @@ public class SceneConductor : MonoBehaviour
 						}
 						break;
 					case ENUM_TOUCH.TOUCH_MOVED:
-						if (m_TouchBeagn != Vector2.zero)
+						if (m_TouchBegan != Vector2.zero)
 						{
-							m_CtrlPlayer.AddForce((InputManager.GetPosition() - m_TouchBeagn).normalized);
+							m_CtrlPlayer.AddForce((InputManager.GetPosition() - m_TouchBegan).normalized);
 						}
 						break;
 					case ENUM_TOUCH.TOUCH_ENDED:
-						m_TouchBeagn = Vector2.zero;
+						m_TouchBegan = Vector2.zero;
 						break;
 				}
 			})

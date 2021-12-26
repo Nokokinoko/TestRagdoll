@@ -25,6 +25,11 @@ public class PlayerController : MonoBehaviour
 		}
 	}
 
+	private void Start()
+	{
+		m_Animator.Play("Walking@loop");
+	}
+
 	public void ToRagdoll()
 	{
 		IsRagdoll = true;
