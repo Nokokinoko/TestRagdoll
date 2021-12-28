@@ -1,30 +1,62 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UniRx;
 using UnityEngine;
 
+[RequireComponent(typeof(BoneRagdollable))]
 public class PlayerController : MonoBehaviour
 {
 	[SerializeField] private Animator m_Animator;
 	[SerializeField] private Rigidbody m_CenterOfGravity;
 	[SerializeField] private Transform m_TransformRagdoll;
 
-	private readonly Dictionary<Transform, Transform> m_DictTransform = new Dictionary<Transform, Transform>();
+	private class CopyTransform
+	{
+		private readonly Transform From;
+		private readonly Transform To;
+
+		public CopyTransform(Transform pFrom, Transform pTo)
+		{
+			From = pFrom;
+			To = pTo;
+		}
+
+		public bool Compare(Transform pTransform)
+		{
+			return pTransform == To;
+		}
+		
+		public void CopyLocalPosition()
+		{
+			To.localPosition = From.localPosition;
+		}
+
+		public void CopyRotation()
+		{
+			To.rotation = From.rotation;
+		}
+	}
+
+	private readonly Dictionary<HumanBodyBones, CopyTransform> m_DictTransform =
+		new Dictionary<HumanBodyBones, CopyTransform>();
+
+	private BoneRagdollable m_BoneRagdollable;
 	private readonly List<Rigidbody> m_ListRigidbody = new List<Rigidbody>();
 
 	public bool IsRagdoll { get; private set; }
 
 	private void Awake()
 	{
-		IsRagdoll = false;
+		m_BoneRagdollable = GetComponent<BoneRagdollable>();
 		
-		foreach (Rigidbody _Child in GetComponentsInChildren<Rigidbody>())
+		IsRagdoll = false;
+
+		List<Rigidbody> _List = new List<Rigidbody>();
+		foreach (Rigidbody _Child in m_TransformRagdoll.GetComponentsInChildren<Rigidbody>())
 		{
-			if (transform != _Child.transform)
-			{
-				_Child.isKinematic = true;
-				m_ListRigidbody.Add(_Child);
-			}
+			_Child.isKinematic = true;
+			_List.Add(_Child);
 		}
 
 		foreach (HumanBodyBones _Bone in Enum.GetValues(typeof(HumanBodyBones)))
@@ -46,13 +78,21 @@ public class PlayerController : MonoBehaviour
 			{
 				continue;
 			}
-			
-			m_DictTransform.Add(_From, _To);
+
+			CopyTransform _Copy = new CopyTransform(_From, _To);
+			Rigidbody _Rigidbody = _List.FirstOrDefault(
+				_Child => _Copy.Compare(_Child.transform) && m_BoneRagdollable.IsInclude(_Bone)
+			);
+			if (_Rigidbody != null)
+			{
+				m_ListRigidbody.Add(_Rigidbody);
+			}
+			m_DictTransform.Add(_Bone, _Copy);
 
 			ObservableRotation _Observable = _From.gameObject.AddComponent<ObservableRotation>();
 			_Observable.OnChangedRotation()
-				.Where(_ => !IsRagdoll)
-				.Subscribe(_ => _To.rotation = _From.rotation)
+				.Where(_ => !(IsRagdoll && m_BoneRagdollable.IsInclude(_Bone)))
+				.Subscribe(_ => _Copy.CopyRotation())
 				.AddTo(this)
 			;
 		}
@@ -75,29 +115,19 @@ public class PlayerController : MonoBehaviour
 	{
 		IsRagdoll = true;
 		
-		foreach (Rigidbody _Child in m_ListRigidbody)
-		{
-			_Child.isKinematic = false;
-		}
-
-		m_Animator.enabled = false;
+		m_ListRigidbody.ForEach(_Child => _Child.isKinematic = false);
 	}
 
 	public void ToAnimate()
 	{
 		IsRagdoll = false;
-		
-		foreach (Rigidbody _Child in m_ListRigidbody)
-		{
-			_Child.isKinematic = true;
-		}
+
+		m_ListRigidbody.ForEach(_Child => _Child.isKinematic = true);
 
 		foreach (var _Pair in m_DictTransform)
 		{
-			_Pair.Value.localPosition = _Pair.Key.localPosition;
+			_Pair.Value.CopyLocalPosition();
 		}
-
-		m_Animator.enabled = true;
 	}
 
 	public void AddForce(Vector2 pNormalizedInput)
