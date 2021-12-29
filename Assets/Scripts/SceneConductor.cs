@@ -24,23 +24,22 @@ public class SceneConductor : MonoBehaviour
 				switch (InputManager.GetTouch())
 				{
 					case ENUM_TOUCH.TOUCH_BEGAN:
-						if (m_CtrlPlayer.IsRagdoll)
-						{
-							m_TouchBegan = InputManager.GetPosition();
-						}
-						else
-						{
-							m_CtrlPlayer.ToRagdoll();
-						}
+						m_CtrlPlayer.ToRagdoll();
+						m_TouchBegan = InputManager.GetPosition();
 						break;
 					case ENUM_TOUCH.TOUCH_MOVED:
-						if (m_TouchBegan != Vector2.zero)
+						Vector2 _Dt = InputManager.GetPosition() - m_TouchBegan;
+						if (_Dt.magnitude < 20.0f)
 						{
-							m_CtrlPlayer.AddForce((InputManager.GetPosition() - m_TouchBegan).normalized);
+							break;
 						}
+
+						float _Rad = Mathf.Atan2(_Dt.y, _Dt.x);
+						m_CtrlPlayer.SetAngle(_Rad);
 						break;
 					case ENUM_TOUCH.TOUCH_ENDED:
 						m_TouchBegan = Vector2.zero;
+						m_CtrlPlayer.OffControl();
 						break;
 				}
 			})

@@ -6,7 +6,7 @@ public class ObservableRotation : MonoBehaviour
 {
 	public IObservable<Unit> OnChangedRotation()
 	{
-		return this.ObserveEveryValueChanged(x => x.transform.rotation)
+		return this.ObserveEveryValueChanged(x => x.transform.localRotation)
 			.AsUnitObservable()
 		;
 	}
