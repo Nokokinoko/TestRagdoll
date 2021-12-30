@@ -3,9 +3,9 @@ using UniRx.Triggers;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SceneConductor : MonoBehaviour
+public class RagdollSceneConductor : MonoBehaviour
 {
-	[SerializeField] private PlayerController m_CtrlPlayer;
+	[SerializeField] private RagdollController m_CtrlRagdoll;
 
 	[SerializeField] private Button m_BtnReset;
 
@@ -14,8 +14,7 @@ public class SceneConductor : MonoBehaviour
 	private void Awake()
 	{
 		m_BtnReset.OnClickAsObservable()
-			.Where(_ => m_CtrlPlayer.IsRagdoll)
-			.Subscribe(_ => m_CtrlPlayer.ToAnimate())
+			.Subscribe(_ => m_CtrlRagdoll.ToAnimate())
 			.AddTo(this)
 		;
 		
@@ -24,7 +23,7 @@ public class SceneConductor : MonoBehaviour
 				switch (InputManager.GetTouch())
 				{
 					case ENUM_TOUCH.TOUCH_BEGAN:
-						m_CtrlPlayer.ToRagdoll();
+						m_CtrlRagdoll.ToRagdoll();
 						m_TouchBegan = InputManager.GetPosition();
 						break;
 					case ENUM_TOUCH.TOUCH_MOVED:
@@ -35,11 +34,11 @@ public class SceneConductor : MonoBehaviour
 						}
 
 						float _Rad = Mathf.Atan2(_Dt.y, _Dt.x);
-						m_CtrlPlayer.SetAngle(_Rad);
+						m_CtrlRagdoll.SetAngle(_Rad);
 						break;
 					case ENUM_TOUCH.TOUCH_ENDED:
 						m_TouchBegan = Vector2.zero;
-						m_CtrlPlayer.OffControl();
+						m_CtrlRagdoll.OffControl();
 						break;
 				}
 			})

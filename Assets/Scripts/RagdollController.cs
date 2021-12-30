@@ -6,7 +6,7 @@ using UniRx.Triggers;
 using UnityEngine;
 
 [RequireComponent(typeof(BoneRagdollable))]
-public class PlayerController : MonoBehaviour
+public class RagdollController : MonoBehaviour
 {
 	[SerializeField] private Animator m_Animator;
 	[SerializeField] private Transform m_Center;
@@ -51,7 +51,7 @@ public class PlayerController : MonoBehaviour
 	private const float ROTATE_CHEST_H = 90.0f;
 	private const float ROTATE_CHEST_V = 90.0f;
 
-	public bool IsRagdoll { get; private set; }
+	private bool IsRagdoll { get; set; }
 
 	private void Awake()
 	{
@@ -93,7 +93,7 @@ public class PlayerController : MonoBehaviour
 			);
 			if (_Rigidbody != null)
 			{
-				if (_Bone == HumanBodyBones.Chest || _Bone == HumanBodyBones.Hips)
+				if (_Bone == HumanBodyBones.Chest || _Bone == HumanBodyBones.Hips || _Bone == HumanBodyBones.Head)
 				{
 					_Rigidbody.isKinematic = true; // always true
 				}

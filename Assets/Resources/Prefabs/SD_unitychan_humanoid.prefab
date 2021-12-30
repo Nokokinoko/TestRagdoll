@@ -5016,7 +5016,6 @@ GameObject:
   - component: {fileID: 5312222664413916656}
   - component: {fileID: 5312222664423457560}
   - component: {fileID: 5312222664419460588}
-  - component: {fileID: 7104130272042649802}
   m_Layer: 0
   m_Name: SD_unitychan_humanoid
   m_TagString: Untagged
@@ -5051,10 +5050,10 @@ Animator:
   m_GameObject: {fileID: 5312222664413950416}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: dd6ec75974b69a3409711f8110698bbb, type: 3}
-  m_Controller: {fileID: 9100000, guid: a0702f03fac0faa4d983e423203b2fb4, type: 2}
+  m_Controller: {fileID: 9100000, guid: 08ca571b0f6624048aa901654ff80a26, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
-  m_ApplyRootMotion: 1
+  m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
@@ -5150,19 +5149,6 @@ MonoBehaviour:
   - {fileID: 5312222664419460380}
   - {fileID: 5312222664419460378}
   - {fileID: 5312222664419460376}
---- !u!114 &7104130272042649802
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5312222664413950416}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 49c67bc6fd2374962af39a5b3ac435d6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_CenterOfGravity: {fileID: 6901940890245628983}
 --- !u!1 &5312222664413950418
 GameObject:
   m_ObjectHideFlags: 0
