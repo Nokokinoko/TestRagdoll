@@ -6796,6 +6796,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7802649411404173345}
   - component: {fileID: 2320628987774993878}
+  - component: {fileID: 992866587088707914}
   - component: {fileID: 3431769474503199256}
   - component: {fileID: 7253382777111352529}
   m_Layer: 0
@@ -6832,9 +6833,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 341c2bc3dcf4e4759bf36e9cedc5a846, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_FootPrint: {fileID: 592484981028971447, guid: 44a1a323013a644f18b4a5a26169fad6, type: 3}
   m_Animator: {fileID: 7616828043219401106}
   m_TransformRagdoll: {fileID: 7616828043226879860}
+--- !u!114 &992866587088707914
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7802649411404173346}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 061e1b8bc64074e8781d7a9a59bf0f54, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Prefab: {fileID: 592484981028971447, guid: 44a1a323013a644f18b4a5a26169fad6, type: 3}
 --- !u!54 &3431769474503199256
 Rigidbody:
   m_ObjectHideFlags: 0

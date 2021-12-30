@@ -1,22 +1,24 @@
+using System;
 using System.Collections.Generic;
 using UniRx;
 using UniRx.Triggers;
 using UnityEngine;
 
+[RequireComponent(typeof(FootPrint))]
 [RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(Collider))]
 public class MoveController : MonoBehaviour
 {
-    [SerializeField] private GameObject m_FootPrint;
-    
-    [SerializeField] private Animator m_Animator;
-    [SerializeField] private Transform m_TransformRagdoll;
+	[SerializeField] private Animator m_Animator;
+	[SerializeField] private Transform m_TransformRagdoll;
+	
+	private FootPrint m_FootPrint;
 
 	private Rigidbody m_Rigidbody;
 	private Collider m_Collider;
 	private Vector2 m_NormalizedDirection = Vector2.zero;
 	
-    private readonly List<Rigidbody> m_ListRigidbody = new List<Rigidbody>();
+	private readonly List<Rigidbody> m_ListRigidbody = new List<Rigidbody>();
 
 	private bool IsRagdoll { get; set; }
 
@@ -24,7 +26,9 @@ public class MoveController : MonoBehaviour
 	
 	private void Awake()
 	{
+		m_FootPrint = GetComponent<FootPrint>();
 		m_Rigidbody = GetComponent<Rigidbody>();
+		
 		m_Collider = GetComponent<Collider>();
 		m_Collider.OnTriggerEnterAsObservable()
 			.Where(_Collider => _Collider.CompareTag("Wall"))
@@ -52,6 +56,12 @@ public class MoveController : MonoBehaviour
 
 				m_Rigidbody.rotation = Quaternion.LookRotation(_Before - _After);
 			})
+			.AddTo(this)
+		;
+
+		Observable.Interval(TimeSpan.FromSeconds(0.3f))
+			.Where(_ => !IsRagdoll && m_NormalizedDirection != Vector2.zero)
+			.Subscribe(_ => m_FootPrint.Leave())
 			.AddTo(this)
 		;
 	}
