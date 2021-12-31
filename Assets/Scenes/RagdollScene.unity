@@ -769,8 +769,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c3f8fad2132504b3da5ab17a39f4c677, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_CtrlRagdoll: {fileID: 0}
+  m_CtrlRagdoll: {fileID: 1505774448}
   m_BtnReset: {fileID: 683788308}
+--- !u!114 &1505774448 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3447181601765874699, guid: 5431167b3869f42f0a1904638657b119, type: 3}
+  m_PrefabInstance: {fileID: 614691159912259418}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 49c67bc6fd2374962af39a5b3ac435d6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1878703665
 GameObject:
   m_ObjectHideFlags: 0
