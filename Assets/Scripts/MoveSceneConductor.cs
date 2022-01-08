@@ -1,19 +1,17 @@
 using UniRx;
 using UniRx.Triggers;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class MoveSceneConductor : MonoBehaviour
 {
 	[SerializeField] private MoveController m_CtrlMove;
-
-	[SerializeField] private Button m_BtnReset;
+	[SerializeField] private MenuController m_CtrlMenu;
 	
 	private Vector2 m_TouchBegan = Vector2.zero;
 	
 	private void Awake()
 	{
-		m_BtnReset.OnClickAsObservable()
+		m_CtrlMenu.RxReset
 			.Subscribe(_ => m_CtrlMove.Reset())
 			.AddTo(this)
 		;
