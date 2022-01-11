@@ -17,6 +17,7 @@ public class MoveSceneConductor : MonoBehaviour
 		;
 		
 		this.UpdateAsObservable()
+			.Where(_ => m_CtrlMenu.EnableCtrl)
 			.Subscribe(_ => {
 				switch (InputManager.GetTouch())
 				{

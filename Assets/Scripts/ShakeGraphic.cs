@@ -2,6 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.UI;
 
+[ExecuteAlways]
 [RequireComponent(typeof(RectTransform))]
 [RequireComponent(typeof(CanvasRenderer))]
 public class ShakeGraphic : Graphic
@@ -32,15 +33,15 @@ public class ShakeGraphic : Graphic
 
 	private const float DURATION = 0.2f;
 	private float m_Interval = 0.0f;
-
-	protected override void Awake()
+	
+	protected override void OnValidate()
 	{
 		m_LB = new VertexInfo(m_SettingLB);
 		m_RB = new VertexInfo(m_SettingRB);
 		m_LT = new VertexInfo(m_SettingLT);
 		m_RT = new VertexInfo(m_SettingRT);
-		
-		base.Awake();
+
+		base.OnValidate();
 	}
 
 	private void Update()

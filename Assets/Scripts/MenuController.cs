@@ -18,6 +18,9 @@ public class MenuController : MonoBehaviour
 	[SerializeField] private Button m_BtnNone;
 	[SerializeField] private Button m_BtnClose;
 
+	private bool m_EnableCtrl;
+	public bool EnableCtrl { get { return m_EnableCtrl; } }
+
 	private const float TIME_SWITCH = 0.3f;
 	private const float DISABLE_POSITION_TOP = 1920.0f;
 	private const float DISABLE_POSITION_MENU = 1080.0f;
@@ -32,9 +35,12 @@ public class MenuController : MonoBehaviour
 		_Position.x = DISABLE_POSITION_MENU;
 		m_UIMenu.localPosition = _Position;
 
+		m_EnableCtrl = true;
+
 		// top
 		m_BtnMenu.OnClickAsObservable()
 			.Subscribe(_ => {
+				m_EnableCtrl = false;
 				m_UITop.DOLocalMoveY(DISABLE_POSITION_TOP, TIME_SWITCH).SetEase(Ease.Linear);
 				m_UIMenu.DOLocalMoveX(0.0f, TIME_SWITCH)
 					.SetEase(Ease.Linear)
@@ -61,7 +67,10 @@ public class MenuController : MonoBehaviour
 				m_UITop.DOLocalMoveY(0.0f, TIME_SWITCH).SetEase(Ease.Linear);
 				m_UIMenu.DOLocalMoveX(DISABLE_POSITION_MENU, TIME_SWITCH)
 					.SetEase(Ease.Linear)
-					.OnComplete(() => m_ShakeBlack.Shake = m_ShakeRed.Shake = false);
+					.OnComplete(() => {
+						m_ShakeBlack.Shake = m_ShakeRed.Shake = false;
+						m_EnableCtrl = true;
+					});
 			})
 			.AddTo(this);
 	}
