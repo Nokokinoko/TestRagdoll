@@ -11,11 +11,14 @@ public class MenuController : MonoBehaviour
 
 	[Space]
 	[SerializeField] private Transform m_UIMenu;
+	[SerializeField] private ShakeGraphic m_ShakeBlack;
+	[SerializeField] private ShakeGraphic m_ShakeRed;
+	[SerializeField] private Transform m_Star;
 	[SerializeField] private Button m_BtnReset;
 	[SerializeField] private Button m_BtnNone;
 	[SerializeField] private Button m_BtnClose;
 
-	private const float TIME_SWITCH = 0.2f;
+	private const float TIME_SWITCH = 0.3f;
 	private const float DISABLE_POSITION_TOP = 1920.0f;
 	private const float DISABLE_POSITION_MENU = 1080.0f;
 
@@ -29,13 +32,24 @@ public class MenuController : MonoBehaviour
 		_Position.x = DISABLE_POSITION_MENU;
 		m_UIMenu.localPosition = _Position;
 
+		// top
 		m_BtnMenu.OnClickAsObservable()
 			.Subscribe(_ => {
 				m_UITop.DOLocalMoveY(DISABLE_POSITION_TOP, TIME_SWITCH).SetEase(Ease.Linear);
-				m_UIMenu.DOLocalMoveX(0.0f, TIME_SWITCH).SetEase(Ease.Linear);
+				m_UIMenu.DOLocalMoveX(0.0f, TIME_SWITCH)
+					.SetEase(Ease.Linear)
+					.OnComplete(() => m_ShakeBlack.Shake = m_ShakeRed.Shake = true);
 			})
 			.AddTo(this);
 
+		// menu
+		Vector3 _Angle = m_Star.localEulerAngles;
+		_Angle.z += 72.0f;
+		m_Star.DOLocalRotate(_Angle, 1.0f, RotateMode.FastBeyond360)
+			.SetDelay(1.0f)
+			.SetEase(Ease.OutBack)
+			.SetLoops(-1, LoopType.Restart);
+		
 		m_BtnReset.OnClickAsObservable()
 			.Subscribe(_ => {
 				m_RxReset.OnNext(Unit.Default);
@@ -45,7 +59,9 @@ public class MenuController : MonoBehaviour
 		m_BtnClose.OnClickAsObservable()
 			.Subscribe(_ => {
 				m_UITop.DOLocalMoveY(0.0f, TIME_SWITCH).SetEase(Ease.Linear);
-				m_UIMenu.DOLocalMoveX(DISABLE_POSITION_MENU, TIME_SWITCH).SetEase(Ease.Linear);
+				m_UIMenu.DOLocalMoveX(DISABLE_POSITION_MENU, TIME_SWITCH)
+					.SetEase(Ease.Linear)
+					.OnComplete(() => m_ShakeBlack.Shake = m_ShakeRed.Shake = false);
 			})
 			.AddTo(this);
 	}
