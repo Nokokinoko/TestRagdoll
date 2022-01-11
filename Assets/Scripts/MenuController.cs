@@ -16,7 +16,7 @@ public class MenuController : MonoBehaviour
 	[SerializeField] private Transform m_Star;
 	[SerializeField] private Button m_BtnReset;
 	[SerializeField] private Button m_BtnNone;
-	[SerializeField] private Button m_BtnClose;
+	[SerializeField] private Button m_BtnReturn;
 
 	private bool m_EnableCtrl;
 	public bool EnableCtrl { get { return m_EnableCtrl; } }
@@ -62,7 +62,7 @@ public class MenuController : MonoBehaviour
 			})
 			.AddTo(this);
 		
-		m_BtnClose.OnClickAsObservable()
+		m_BtnReturn.OnClickAsObservable()
 			.Subscribe(_ => {
 				m_UITop.DOLocalMoveY(0.0f, TIME_SWITCH).SetEase(Ease.Linear);
 				m_UIMenu.DOLocalMoveX(DISABLE_POSITION_MENU, TIME_SWITCH)
