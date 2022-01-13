@@ -119,8 +119,8 @@ Material:
     m_Colors:
     - Color_48A70A3D: {r: 1, g: 1, b: 1, a: 0}
     - Color_537723E0: {r: 0.7264151, g: 0.7264151, b: 0.7264151, a: 0}
-    - Color_F1D4F974: {r: 0, g: 0, b: 0, a: 0}
-    - Vector3_5C9CB8FC: {r: 0.5, g: 0.5, b: 0, a: 0}
+    - Color_F1D4F974: {r: 0.13333334, g: 0.13333334, b: 0.13333334, a: 0}
+    - Vector3_5C9CB8FC: {r: -0.12, g: 0.12, b: 0, a: 0}
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}

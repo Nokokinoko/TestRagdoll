@@ -16,7 +16,7 @@ public class VertexInfo
 
     public void SetNextVertex()
     {
-        if (!m_Setting.m_IsShake)
+        if (m_Setting.m_RangeShake <= 0)
         {
             return;
         }
@@ -24,8 +24,8 @@ public class VertexInfo
         m_From = m_To;
 
         m_To = m_Setting.m_Position;
-        m_To.x += Random.Range(-20, 20);
-        m_To.y += Random.Range(-20, 20);
+        m_To.x += Random.Range(-m_Setting.m_RangeShake, m_Setting.m_RangeShake);
+        m_To.y += Random.Range(-m_Setting.m_RangeShake, m_Setting.m_RangeShake);
     }
 
     public void CalcPosition(float pRatio)

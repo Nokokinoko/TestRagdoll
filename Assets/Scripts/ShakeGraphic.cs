@@ -13,7 +13,7 @@ public class ShakeGraphic : Graphic
 	[Serializable]
 	public class VertexSetting
 	{
-		public bool m_IsShake;
+		public int m_RangeShake;
 		public Vector2 m_Position;
 	}
 	
@@ -21,6 +21,11 @@ public class ShakeGraphic : Graphic
 	[SerializeField] private VertexSetting m_SettingRB;
 	[SerializeField] private VertexSetting m_SettingLT;
 	[SerializeField] private VertexSetting m_SettingRT;
+
+	public void SetVertexSetting(Vector2 pOffsetMin, Vector2 pOffsetMax)
+	{
+		
+	}
 	#endregion
 
 	private VertexInfo m_LB;
@@ -93,9 +98,9 @@ public class ShakeGraphic : Graphic
 		
 		Gizmos.color = Color.green;
 		
-		Gizmos.DrawSphere(m_SettingLB.m_Position, 50.0f);
-		Gizmos.DrawSphere(m_SettingRB.m_Position, 50.0f);
-		Gizmos.DrawSphere(m_SettingLT.m_Position, 50.0f);
-		Gizmos.DrawSphere(m_SettingRT.m_Position, 50.0f);
+		Gizmos.DrawSphere(m_SettingLB.m_Position, 20.0f);
+		Gizmos.DrawSphere(m_SettingRB.m_Position, 20.0f);
+		Gizmos.DrawSphere(m_SettingLT.m_Position, 20.0f);
+		Gizmos.DrawSphere(m_SettingRT.m_Position, 20.0f);
 	}
 }
